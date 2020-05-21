@@ -38,8 +38,6 @@ public class AuthorizeController {
                            @RequestParam(name = "state")String state,
                            HttpServletRequest request,
                            HttpServletResponse response){
-        System.out.println(code);
-        System.out.println(state);
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setCode(code);
@@ -56,8 +54,8 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             userMapper.insert(user);
-            System.out.println(user);
             Cookie cookie = new Cookie("token",token);
             cookie.setMaxAge(10*60);
             response.addCookie(cookie);
