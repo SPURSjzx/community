@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="life.jzx.community.mapper.QuestionMapper">
+    <resultMap id="questionDto" type="life.jzx.community.dto.QuestionDTO">
+        <id  property="id" column="id"></id>
+        <result property="gmtModified" column="gmt_modifier"></result>
+        <result property="likeCount" column="like_count"></result>
+        <result property="tag" column="tag"></result>
+        <result property="title" column="title"></result>
+        <result property="viewCount" column="view_count"></result>
+        <result property="gmtCreate" column="gmt_create"></result>
+        <result property="commentCount" column="coment_count"></result>
+        <result property="creator" column="creator"></result>
+        <result property="description" column="description"></result>
+        <association property="users" javaType="life.jzx.community.model.User">
+            <id column="id" property="id"></id>
+            <result column="gmt_modified" property="gmtModified"></result>
+            <result column="avatar_url" property="avatarUrl"></result>
+            <result column="account_id" property="accountId"></result>
+            <result column="gmt_create" property="gmtCreate"></result>
+            <result column="name" property="name" ></result>
+            <result column="token" property="token" ></result>
+        </association>
+    </resultMap>
     <insert id="create" parameterType="life.jzx.community.dto.QuestionDTO">
         insert into question(title,description,gmt_create,gmt_modifier,creator,tag) values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tag})
     </insert>
+    
+    <select id="list" resultMap="questionDto" parameterType="integer">
+<!--        SELECT * FROM question  LEFT JOIN USER ON question.`creator`=user.`id`;-->
+<!--        SELECT q.`creator`,u.`gmt_create` FROM question  LEFT JOIN USER as u ON question.`creator`=u.`id`;-->
+        SELECT q.id,q.`coment_count`,q.`description`,q.`gmt_create`,q.`like_count`,q.`view_count`,q.`tag`,q.`title`,q.`creator`,q.`gmt_modifier`,u.`avatar_url`,u.`account_id`,u.gmt_create,
+        u.`gmt_modified`,u.`name`,u.`id`,u.`token`,u.`name` FROM question AS q INNER JOIN USER AS u ON q.`creator`=u.`id`  LIMIT  #{offset},#{size}
+    </select>
 </mapper>

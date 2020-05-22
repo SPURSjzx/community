@@ -1,6 +1,7 @@
 package life.jzx.community.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @Auther: Administrator
