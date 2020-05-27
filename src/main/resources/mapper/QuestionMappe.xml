@@ -32,4 +32,15 @@
         SELECT q.id,q.`coment_count`,q.`description`,q.`gmt_create`,q.`like_count`,q.`view_count`,q.`tag`,q.`title`,q.`creator`,q.`gmt_modifier`,u.`avatar_url`,u.`account_id`,u.gmt_create,
         u.`gmt_modified`,u.`name`,u.`id`,u.`token`,u.`name` FROM question AS q INNER JOIN USER AS u ON q.`creator`=u.`id`  LIMIT  #{offset},#{size}
     </select>
+
+    <select id="listbyid" parameterType="integer" resultType="life.jzx.community.dto.PaginationDTO">
+        select * from question where creator=#{creator} limit #{page},#{size};
+    </select>
+    <select id="getById" resultMap="questionDto" parameterType="int">
+         SELECT q.id,q.`coment_count`,q.`description`,q.`gmt_create`,q.`like_count`,q.`view_count`,q.`tag`,q.`title`,q.`creator`,q.`gmt_modifier`,u.`avatar_url`,u.`account_id`,u.gmt_create,
+        u.`gmt_modified`,u.`name`,u.`id`,u.`token`FROM question AS q INNER JOIN USER AS u ON q.`creator`=u.`id` where q.`id`=#{id}
+    </select>
+    <update id="update" parameterType="life.jzx.community.dto.QuestionDTO">
+        update question set title=#{title},description=#{description},tag=#{tag} where id = #{id}
+    </update>
 </mapper>

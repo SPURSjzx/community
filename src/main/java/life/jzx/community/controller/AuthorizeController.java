@@ -5,6 +5,7 @@ import life.jzx.community.dto.GithubUser;
 import life.jzx.community.mapper.UserMapper;
 import life.jzx.community.model.User;
 import life.jzx.community.provide.GitHubProvider;
+import life.jzx.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ public class AuthorizeController {
     private UserMapper userMapper;
     @Autowired
     private GitHubProvider gitHubProvider;
+    @Autowired
+    private UserService userService;
     @Value("${github.client.id}")
     private String clientId;
     @Value("${github.client.serrcret}")
@@ -36,7 +39,6 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code")String code,
                            @RequestParam(name = "state")String state,
-                           HttpServletRequest request,
                            HttpServletResponse response){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
@@ -55,7 +57,7 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatarUrl());
-            userMapper.insert(user);
+            userService.createOrUpdate(user);
             Cookie cookie = new Cookie("token",token);
             cookie.setMaxAge(10*60);
             response.addCookie(cookie);
@@ -64,5 +66,14 @@ public class AuthorizeController {
             //登录失败
             return "redirect:/";
         }
+    }
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response,
+                         HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }

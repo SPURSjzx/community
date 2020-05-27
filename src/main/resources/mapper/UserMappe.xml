@@ -9,4 +9,10 @@
     <select id="findByToken" parameterType="string" resultType="life.jzx.community.model.User">
         select * from user where token = #{token}
   </select>
+    <select id="findByAccountId" resultType="life.jzx.community.model.User" parameterType="String">
+        select * from user where  account_id =#{accountId}
+    </select>
+    <delete id="update" parameterType="life.jzx.community.model.User">
+        update user set name =#{name},token=#{token},gmt_modified=#{gmtModified},avatar_url=#{avatarUrl} where account_id=#{accountId}
+    </delete>
 </mapper>

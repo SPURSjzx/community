@@ -1,14 +1,15 @@
 package life.jzx.community.controller;
+import	java.security.acl.Group;
 import life.jzx.community.dto.QuestionDTO;
 import life.jzx.community.mapper.QuestionMapper;
-import life.jzx.community.mapper.UserMapper;
+
 import life.jzx.community.model.User;
+import life.jzx.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -21,8 +22,22 @@ public class PublishController {
 
     @Autowired
     private QuestionMapper questionMapper;
+
     @Autowired
-    private UserMapper userMapper;
+    private QuestionService questionService;
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable(value = "id")Integer id,
+                       Model model){
+        //通过form隐藏传过来的id进行判断是新建问题还是修改问题
+        QuestionDTO byId = questionMapper.getById(id);
+        model.addAttribute("title",byId.getTitle());
+        model.addAttribute("description",byId.getDescription());
+        model.addAttribute("tag",byId.getTag());
+        model.addAttribute("id",byId.getId());
+        return "publish";
+    }
+
 
     @GetMapping("/publish")
     public String publish() {
@@ -32,8 +47,8 @@ public class PublishController {
     @PostMapping( "/doPublish")
     public String doPublish(QuestionDTO questionDTO,
                             Model model,
-                            HttpServletRequest request){
-        User user = new User();
+                            HttpServletRequest request,
+                            @RequestParam(value = "id",required = false)Integer id){
         model.addAttribute("title",questionDTO.getTitle());
         model.addAttribute("description",questionDTO.getDescription());
         model.addAttribute("tag",questionDTO.getTag());
@@ -49,27 +64,15 @@ public class PublishController {
             model.addAttribute("error","标签不能为空");
             return "/publish";
         }
-        Cookie[] cookies = request.getCookies();
-        if(cookies.length!=0 && cookies!=null) {
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    String token = cookie.getValue();
-                    user = userMapper.findByToken(token);
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
         if(user.getId()==null){
             model.addAttribute("error","请先登录");
             return "/publish";
         }else {
             questionDTO.setCreator(user.getId());
             questionDTO.setGmtCreate(user.getGmtCreate());
-            questionDTO.setGmtModified(user.getGmtModified());
-            questionMapper.create(questionDTO);
+            questionDTO.setId(id);
+            questionService.createOrUpdate(questionDTO);
             return "redirect:/";
         }
     }

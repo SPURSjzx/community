@@ -2,9 +2,6 @@ package life.jzx.community.dto;
 
 import life.jzx.community.model.User;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.List;
 
 /**
  * @Auther: Administrator
