@@ -6,7 +6,7 @@
         values (#{parentId},#{type},#{commentator},#{gmt_create},#{gmt_modified},#{like_count},#{content})
     </insert>
 
-    <select id="insert" parameterType="int" resultType="life.jzx.community.model.Comment">
+    <select id="selectByPrimryKey" parameterType="int" resultType="life.jzx.community.model.Comment">
         select * from where id=#{parentId};
     </select>
 </mapper>
