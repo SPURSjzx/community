@@ -31,5 +31,8 @@ public interface QuestionMapper {
 
     QuestionDTO getById(@Param("id") Integer id);
 
-    void update(QuestionDTO questionDTO);
+    Integer update(QuestionDTO questionDTO);
+    Integer updateView(Question question);
+
+    void incCommentCount(QuestionDTO byId);
 }
