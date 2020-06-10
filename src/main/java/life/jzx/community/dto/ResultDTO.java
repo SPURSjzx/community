@@ -1,11 +1,10 @@
 package life.jzx.community.dto;
 
-import com.sun.org.apache.regexp.internal.RE;
 import life.jzx.community.exception.CustomizeErrorCode;
 import life.jzx.community.exception.CustomizeException;
 import lombok.Data;
 
-/**
+/*
  * @Auther: Administrator
  * @Date: 2020/5/29 0029 09:50
  * @Description:

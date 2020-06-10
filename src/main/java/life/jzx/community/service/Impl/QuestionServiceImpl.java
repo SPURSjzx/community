@@ -1,13 +1,11 @@
 package life.jzx.community.service.Impl;
 
-import life.jzx.community.dto.CommentDTO;
 import life.jzx.community.dto.PaginationDTO;
 import life.jzx.community.dto.QuestionDTO;
 import life.jzx.community.exception.CustomizeErrorCode;
 import life.jzx.community.exception.CustomizeException;
 import life.jzx.community.mapper.CommentMapper;
 import life.jzx.community.mapper.QuestionMapper;
-import life.jzx.community.model.Comment;
 import life.jzx.community.model.Question;
 import life.jzx.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;

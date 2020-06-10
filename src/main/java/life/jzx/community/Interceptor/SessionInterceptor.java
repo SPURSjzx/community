@@ -2,9 +2,7 @@ package life.jzx.community.Interceptor;
 
 import life.jzx.community.mapper.UserMapper;
 import life.jzx.community.model.User;
-import life.jzx.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
