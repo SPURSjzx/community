@@ -1,5 +1,6 @@
 package life.jzx.community.dto;
 
+import com.sun.org.apache.regexp.internal.RE;
 import life.jzx.community.exception.CustomizeErrorCode;
 import life.jzx.community.exception.CustomizeException;
 import lombok.Data;
@@ -10,11 +11,11 @@ import lombok.Data;
  * @Description:
  */
 @Data
-public class ResultDTO {
+public class ResultDTO<T> {
 
     private Integer code;
     private String message;
-
+    private T data;
     public static ResultDTO errorof(Integer code,String message){
         ResultDTO resultDTO=new ResultDTO();
         resultDTO.setCode(code);
@@ -35,7 +36,14 @@ public class ResultDTO {
         resultDTO.setMessage("请求成功");
         return resultDTO;
     }
+    public static <T> ResultDTO okof(T t){
+        ResultDTO resultDTO=new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setData(t);
+        resultDTO.setMessage("请求成功");
 
+        return resultDTO;
+    }
     public static ResultDTO errorof(CustomizeException ex) {
         return errorof(ex.getCode(),ex.getMessage());
     }

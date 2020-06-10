@@ -48,6 +48,6 @@
     </update>
     <update id="incCommentCount" parameterType="life.jzx.community.dto.QuestionDTO">
         update question
-        set  comment_count = comment_count+#{commentCount} where id = #{id};
+        set  coment_count = coment_count+1 where id = #{id};
     </update>
 </mapper>

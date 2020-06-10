@@ -1,7 +1,10 @@
 package life.jzx.community.service;
 
+import life.jzx.community.dto.CommentDTO;
 import life.jzx.community.dto.PaginationDTO;
 import life.jzx.community.dto.QuestionDTO;
+
+import java.util.List;
 
 /**
  * @Auther: Administrator

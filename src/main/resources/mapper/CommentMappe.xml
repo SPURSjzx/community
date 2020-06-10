@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="life.jzx.community.mapper.CommentMapper">
     <insert id="insert" parameterType="life.jzx.community.model.Comment">
-        insert into comment(parent_id,type,commentator,gmt_create,gmt_modified,like_count,content)
+        INSERT INTO COMMENT(parent_id,TYPE,commentator,gmt_create,gmt_modified,like_count,content)
         values (#{parentId},#{type},#{commentator},#{gmt_create},#{gmt_modified},#{like_count},#{content})
     </insert>
 
     <select id="selectByPrimryKey" parameterType="int" resultType="life.jzx.community.model.Comment">
-        select * from where id=#{parentId};
+        select * from comment where parent_id=#{parentId} and type=#{type} ORDER BY gmt_create DESC;
     </select>
 </mapper>

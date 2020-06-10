@@ -35,4 +35,6 @@ public interface QuestionMapper {
     Integer updateView(Question question);
 
     void incCommentCount(QuestionDTO byId);
+
+//    void listByQuestionId(Integer id);
 }

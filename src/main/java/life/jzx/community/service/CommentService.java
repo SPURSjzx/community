@@ -1,6 +1,10 @@
 package life.jzx.community.service;
 
+import life.jzx.community.dto.CommentDTO;
+import life.jzx.community.enums.CommentTypeEnum;
 import life.jzx.community.model.Comment;
+
+import java.util.List;
 
 /**
  * @Auther: Administrator
@@ -8,5 +12,6 @@ import life.jzx.community.model.Comment;
  * @Description:
  */
 public interface CommentService {
-    public void insert(Comment comment);
+    List<CommentDTO> listByQuestionId(Integer id, Integer type);
+    void insert(Comment comment);
 }

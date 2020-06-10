@@ -2,7 +2,8 @@ package life.jzx.community.mapper;
 
 import life.jzx.community.model.Comment;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @Auther: Administrator
@@ -12,7 +13,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CommentMapper {
 
-    void insert(@Param("comment") Comment comment);
+    void insert( Comment comment);
 
-    Comment selectByPrimryKey(Integer parentId);
+    List<Comment> selectByPrimryKey(Integer parentId, Integer type);
 }
